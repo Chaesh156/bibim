@@ -1,11 +1,12 @@
 package com.chaesh.Domain.posts;
+import com.chaesh.Domain.BaseTimeEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
 @NoArgsConstructor
 @Entity
-public class Posts {
+public class Posts extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
