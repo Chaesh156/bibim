@@ -26,7 +26,14 @@ public class OAuthAttributes {
     }
 
     public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes){
-        return ofGoogle(userNameAttributeName, attributes);
+        if (registrationId.equals("naver")){
+            return ofNaver(userNameAttributeName, attributes);
+        }
+        else if (registrationId.equals("kakao")) {
+            return ofKakao(userNameAttributeName, attributes);
+        }
+        else {
+        return ofGoogle(userNameAttributeName, attributes);}
     }
 
     private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes){
@@ -34,6 +41,27 @@ public class OAuthAttributes {
                 .name((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
                 .picture((String) attributes.get("picture"))
+                .attributes(attributes)
+                .nameAttributeKey(userNameAttributeName)
+                .build();
+    }
+    private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes){
+        Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+
+        return OAuthAttributes.builder()
+                .name((String) response.get("name"))
+                .email((String) response.get("email"))
+                .picture((String) response.get("profile_image"))
+                .attributes(attributes)
+                .nameAttributeKey(userNameAttributeName)
+                .build();
+    }
+    private static OAuthAttributes ofKakao(String userNameAttributeName, Map<String, Object> attributes){
+        Map<String, Object> profile = (Map<String, Object>) attributes.get("properties");
+        return OAuthAttributes.builder()
+                .name((String) profile.get("nickname"))
+                .email((String) attributes.get("email"))
+                .picture((String) profile.get("profile_image_url"))
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .build();

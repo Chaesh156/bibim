@@ -19,21 +19,21 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         http
-                .csrf().disable()
-                .headers().frameOptions().disable()
+                    .csrf().disable()
+                    .headers().frameOptions().disable()
                 .and()
-                .authorizeHttpRequests()
-                .requestMatchers("/","/css/**","/images/**","/js/**","/h2-console/**").permitAll()
-                .requestMatchers("/api/v1/**").hasRole(Role.USER.name())
-                .anyRequest().authenticated()
+                    .authorizeHttpRequests()
+                    .requestMatchers("/","/css/**","/images/**","/js/**","/h2-console/**","/error").permitAll()
+                    .requestMatchers("/api/v1/**").hasRole(Role.USER.name())
+                    .anyRequest().authenticated()
                 .and()
-                .logout()
-                .logoutSuccessUrl("/")
+                    .logout()
+                    .logoutSuccessUrl("/")
                 .and()
-                .oauth2Login()
-                .defaultSuccessUrl("/")
-                .userInfoEndpoint()
-                .userService(customOAuth2UserService);
+                    .oauth2Login()
+                    .defaultSuccessUrl("/")
+                    .userInfoEndpoint()
+                    .userService(customOAuth2UserService);
         return http.build();
     }
 }
