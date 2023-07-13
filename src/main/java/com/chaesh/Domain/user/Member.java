@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 
-public class Users {
+public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,14 +26,14 @@ public class Users {
     private Role role;
 
     @Builder
-    public Users(String name, String email, String picture, Role role){
+    public Member(String name, String email, String picture, Role role){
         this.name = name;
         this.email = email;
         this.picture = picture;
         this.role = role;
     }
 
-    public Users update(String name, String picture){
+    public Member update(String name, String picture){
         this.name = name;
         this.picture = picture;
 
