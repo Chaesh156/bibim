@@ -1,9 +1,11 @@
 package com.chaesh.Domain.posts;
 import com.chaesh.Domain.BaseTimeEntity;
+import com.chaesh.Domain.user.Member;
 import jakarta.persistence.*;
 import lombok.*;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 public class Posts extends BaseTimeEntity {
@@ -12,6 +14,10 @@ public class Posts extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+
     @Column(length = 500, nullable = false)
     private String title;
 
@@ -19,6 +25,8 @@ public class Posts extends BaseTimeEntity {
     private String content;
 
     private String author;
+
+    private Long like_count;
 
     @Builder
     public Posts(String title, String content, String author) {
