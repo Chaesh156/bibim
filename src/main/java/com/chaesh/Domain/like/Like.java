@@ -28,7 +28,9 @@ public class Like extends BaseTimeEntity {
     private Posts posts;
 
     @Builder
-    public Like(String member_id, String posts_id){
+    public Like(Member member, Posts posts){
+        this.member = member;
+        this.posts = posts;
     }
 
 }

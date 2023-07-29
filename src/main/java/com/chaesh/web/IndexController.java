@@ -38,10 +38,8 @@ public class IndexController {
         return "posts-save";
     }
 
-    @GetMapping("/like/{memberId}/{postsId}")
-    public String {
 
-    }
+
 
     @GetMapping("/posts/update/{id}")
     public String postsUpdate(@PathVariable Long id, Model model) {
