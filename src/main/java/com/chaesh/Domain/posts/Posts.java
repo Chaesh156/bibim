@@ -26,7 +26,6 @@ public class Posts extends BaseTimeEntity {
 
     private String author;
 
-    private Long like_count;
 
     @Builder
     public Posts(String title, String content, String author) {

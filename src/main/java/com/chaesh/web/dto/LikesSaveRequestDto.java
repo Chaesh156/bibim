@@ -1,30 +1,30 @@
 package com.chaesh.web.dto;
 
-import com.chaesh.Domain.like.Like;
+import com.chaesh.Domain.likes.Likes;
 import com.chaesh.Domain.posts.Posts;
 import com.chaesh.Domain.user.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Setter
 @Getter
 @NoArgsConstructor
 
-public class LikeSaveRequestDto {
+public class LikesSaveRequestDto {
 
     private Member member;
     private Posts posts;
 
     @Builder
-    public LikeSaveRequestDto(Member member, Posts posts) {
+    public LikesSaveRequestDto(Member member, Posts posts) {
         this.member = member;
         this.posts = posts;
     }
 
-    public Like toEntity() {
-        return Like.builder()
-                .member(member)
-                .posts(posts)
+    public Likes toEntity() {
+        return Likes.builder()
                 .build();
     }
 }

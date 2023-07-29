@@ -12,6 +12,9 @@ var main = {
         $('#btn-delete').on('click', function () {
             _this.delete();
         });
+        $('#btn-like').on('click',function (){
+            _this.like();
+        });
     },
     save : function () {
         var data = {
@@ -29,6 +32,20 @@ var main = {
         }).done(function() {
             alert('글이 등록되었습니다.');
             window.location.href = '/';
+        }).fail(function (error) {
+            alert(JSON.stringify(error));
+        });
+    },
+    like : function () {
+        var member = sessionStorage.getItem('user');
+        var postId = $('#id').val();
+
+        $.ajax({
+            type: 'POST',
+            url: '/api/v1/likes/'+member+'/'+postId,
+        }).done(function() {
+            alert('좋아요가 눌렸습니다.');
+            window.location.href = '/posts/update/'+postId;
         }).fail(function (error) {
             alert(JSON.stringify(error));
         });

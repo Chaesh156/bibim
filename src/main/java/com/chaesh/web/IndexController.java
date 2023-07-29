@@ -43,18 +43,12 @@ public class IndexController {
 
     @GetMapping("/posts/update/{id}")
     public String postsUpdate(@PathVariable Long id, Model model) {
-        PostsResponseDto dto = postsService.findById(id);
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
 
-        try{
-            if (!dto.getMember().getEmail().equals(user.getEmail()))
-                throw new IllegalArgumentException();
-        }catch (Exception e){
-            System.out.println("글 작성자 본인만 글을 수정할 수 있습니다");
+        if(!postsService.checkSessionUserWithPostMember(id, user))
             return "/";
-        }
-        model.addAttribute("post",dto);
 
+        model.addAttribute("post", postsService.findById(id));
         return "posts-update";
     }
 
