@@ -1,8 +1,12 @@
 package com.chaesh.Domain.posts;
 import com.chaesh.Domain.BaseTimeEntity;
+import com.chaesh.Domain.likes.Likes;
 import com.chaesh.Domain.user.Member;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -25,6 +29,9 @@ public class Posts extends BaseTimeEntity {
     private String content;
 
     private String author;
+
+    @OneToMany(mappedBy = "posts")
+    List<Likes> likes = new ArrayList<>();
 
 
     @Builder

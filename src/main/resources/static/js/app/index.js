@@ -37,12 +37,11 @@ var main = {
         });
     },
     like : function () {
-        var member = sessionStorage.getItem('user');
         var postId = $('#id').val();
 
         $.ajax({
             type: 'POST',
-            url: '/api/v1/likes/'+member+'/'+postId,
+            url: '/api/v1/likes/1/'+postId,
         }).done(function() {
             alert('좋아요가 눌렸습니다.');
             window.location.href = '/posts/update/'+postId;

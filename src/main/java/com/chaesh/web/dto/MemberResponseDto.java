@@ -21,15 +21,13 @@ public class MemberResponseDto {
     private String email;
     private String picture;
     private Role role;
-    List<Posts> posts = new ArrayList<>();
 
     @Builder
-    public MemberResponseDto(Member entity){
-        this.id = entity.getId();
-        this.name = entity.getName();
-        this.email = entity.getEmail();
-        this.picture = entity.getPicture();
-        this.role = entity.getRole();
-        this.posts = entity.getPosts();
+    public MemberResponseDto(Member member){
+        this.id = member.getId();
+        this.name = member.getName();
+        this.email = member.getEmail();
+        this.picture = member.getPicture();
+        this.role = member.getRole();
     }
 }

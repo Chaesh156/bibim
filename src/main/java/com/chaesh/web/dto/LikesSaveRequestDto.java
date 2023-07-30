@@ -14,6 +14,7 @@ import lombok.Setter;
 
 public class LikesSaveRequestDto {
 
+    private String test;
     private Member member;
     private Posts posts;
 

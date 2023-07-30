@@ -26,6 +26,8 @@ public class Likes extends BaseTimeEntity {
 
     @Builder
     public Likes(){
+        this.member = member;
+        this.posts = posts;
     }
 
 }

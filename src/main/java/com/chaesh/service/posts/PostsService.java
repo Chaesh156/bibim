@@ -1,5 +1,7 @@
 package com.chaesh.service.posts;
 
+import com.chaesh.Domain.exception.MemberNotExistException;
+import com.chaesh.Domain.exception.PostsNotExistException;
 import com.chaesh.Domain.likes.LikesRepository;
 import com.chaesh.Domain.posts.PostRepository;
 import com.chaesh.Domain.posts.Posts;
@@ -25,7 +27,6 @@ public class PostsService {
     private final PostRepository postsRepository;
     private final HttpSession httpSession;
     private final MemberRepository memberRepository;
-    private final LikesRepository likeRepository;
 
     @Transactional
     public Long save(PostsSaveRequestDto requestDto) {
@@ -33,7 +34,7 @@ public class PostsService {
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
 
         Member member = memberRepository.findByEmail(user.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("해당 email을 가진 member가 없습니다. id=" + user.getEmail()));
+                .orElseThrow(() -> new MemberNotExistException("해당 email을 가진 member가 없습니다. id=" + user.getEmail()));
         posts.setMember(member);
 
         return postsRepository.save(posts).getId();
@@ -42,13 +43,13 @@ public class PostsService {
     @Transactional
     public Long update(Long id, PostsUpdateRequestDto requestDto){
         Posts posts = postsRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+                .orElseThrow(() -> new PostsNotExistException("해당 게시글이 없습니다. id=" + id));
         posts.update(requestDto.getTitle(), requestDto.getContent());
         return id;
     }
     public PostsResponseDto findById(Long id){
         Posts entity = postsRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("해당 게시글이 없습니다. id=" + id));
+                .orElseThrow(() -> new PostsNotExistException("해당 게시글이 없습니다. id=" + id));
 
         return new PostsResponseDto(entity);
     }
@@ -62,13 +63,12 @@ public class PostsService {
     }
 
     public void delete(Long id){
-        Posts posts = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 사용자가 없습니다. id =" + id));
+        Posts posts = postsRepository.findById(id).orElseThrow(() -> new MemberNotExistException("해당 사용자가 없습니다. id =" + id));
         postsRepository.delete(posts);
     }
     public boolean checkSessionUserWithPostMember(Long postsId, SessionUser user) {
         Posts posts = postsRepository.findById(postsId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 posts가 없습니다" + postsId));
-
+                .orElseThrow(() -> new PostsNotExistException("해당 posts가 없습니다" + postsId));
 
         try{
             if(!posts.getMember().getEmail().equals(user.getEmail()))
